@@ -15,19 +15,23 @@ if __name__ == '__main__':
         # 把set的clusters转换成list
         write_data(file_cluster, list(clusters))
 
-
-#     计算每个clusters的总的消费综合，然后按照总和进行排序，
+    # 计算每个clusters的总的消费综合，然后按照总和进行排序，
     clusters = read_data(file_cluster + npy)
-    print(len(clusters))
-    users_account = read_data(file_acount+npy)
+    users_account = read_data(file_acount + npy)
     all_money = list()
     for cluster in clusters:
         all = 0
         for userid in cluster:
             all = all + users_account[userid]
-        all_money.append((cluster,all))
-
-    print(all_money[0])
-    all_money.sort(key=lambda x:x[1],reverse=True)
+        all_money.append((cluster, all))
+    # 按照tuple的第二个元素进行排序
+    all_money.sort(key=lambda x: x[1], reverse=True)
     # 这里会有一个空的tuple内容，可以查查是如何产生的
-    print(all_money[len(all_money)-2])
+    top100_all = 0
+    for i in range(0,100):
+        top100_all += all_money[i][1]
+
+
+    A = len(clusters)
+    B = top100_all
+    print("A:   B：  ",(A,B))

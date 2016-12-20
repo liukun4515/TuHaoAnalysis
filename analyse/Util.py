@@ -17,6 +17,7 @@ def read_user(file):
     for user in open(file):
         datas = user.strip().split(" ")
         one_user = list()
+        one_user.append(int(datas[0]))
         for i in range(2, 2 + int(datas[1])):
             one_user.append(int(datas[i]))
         users.append(one_user)
@@ -30,8 +31,8 @@ def get_account(file, users, items):
     j = 0
     for account in open(file):
         j = j + 1
-        if j % 100000==0:
-            print("处理了%d 十万条数据"%(j/100000))
+        if j % 100000 == 0:
+            print("处理了%d 十万条数据" % (j / 100000))
         datas = account.strip().split(" ")
         one_deal_amount = 0
         # 计算这条购物记录使用的费用为
@@ -52,6 +53,7 @@ def get_cluster(users):
     for user in users:
         one_cluster = list()
         one_cluster = list(set(one_cluster).union(set(user)))
+
         for id in user:
             one_cluster = list(set(one_cluster).union(set(users[id])))
 
@@ -68,7 +70,21 @@ def read_data(file):
     return np.load(file)
 
 
+# just for test the cluster function
 if __name__ == '__main__':
-    items = read_item(file_item)
-    users = read_user(file_user)
-    
+    '''
+    这个是一个测试方法，测试按照这种user的情况下，对应的cluster的数目和内容是否正确
+    '''
+    user0 = [0, 1]
+    user1 = [1, 0, 2]
+    user2 = [2, 1, 3]
+    user3 = [3, 2]
+    user4 = [4]
+    user = []
+    user.append(user0)
+    user.append(user1)
+    user.append(user2)
+    user.append(user3)
+    user.append(user4)
+    clusters = get_cluster(user)
+    print(clusters)
