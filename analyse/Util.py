@@ -51,14 +51,17 @@ def get_cluster(users):
     '''
     clusters = set()
     for user in users:
-        one_cluster = list()
-        one_cluster = list(set(one_cluster).union(set(user)))
+        one_cluster = set()
+        one_cluster = one_cluster.union(set(user))
 
         for id in user:
-            one_cluster = list(set(one_cluster).union(set(users[id])))
-
+            one_cluster = one_cluster.union(set(users[id]))
+        one_cluster = list(one_cluster)
+        one_cluster.sort()
+        # one_cluster = set(one_cluster)
         clusters.add(tuple(one_cluster))
     print("发现cluster的个数为:%d" % len(clusters))
+
     return clusters
 
 
@@ -76,8 +79,8 @@ if __name__ == '__main__':
     这个是一个测试方法，测试按照这种user的情况下，对应的cluster的数目和内容是否正确
     '''
     user0 = [0, 1]
-    user1 = [1, 0, 2]
-    user2 = [2, 1, 3]
+    user1 = [1, 2, 0]
+    user2 = [2, 3, 1]
     user3 = [3, 2]
     user4 = [4]
     user = []
